@@ -1,7 +1,7 @@
-import { Inject, Injectable, NotFoundException} from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { TodoCreate } from './DTO/todo-create.dto';
 import { TodoModel } from './todo.model';
-import { TodoUpdate } from './DTO/todo-update.dto';
+import { TodoUpdateDto } from './DTO/todo-update.dto';
 
 @Injectable()
 export class TodoService {
@@ -12,7 +12,6 @@ export class TodoService {
       this.uuid(),
       body_todo.name,
       body_todo.description,
-      TodoModel.strToEnum(body_todo.status),
     );
     this.todos.push(todo);
     return todo;
@@ -38,7 +37,7 @@ export class TodoService {
   all() {
     return this.todos;
   }
-  updateById(id: string, updateTodo: TodoUpdate) {
+  updateById(id: string, updateTodo: TodoUpdateDto) {
     const todo = this.todos.find((element) => element.id === id);
     if (todo) {
       const todoId = this.todos.indexOf(todo);
