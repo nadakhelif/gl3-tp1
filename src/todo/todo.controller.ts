@@ -17,7 +17,6 @@ import { SearchDTO } from './DTO/search.dto';
 
 @Controller('todo')
 export class TodoController {
-  private todos: TodoModel[] = [];
   constructor(private readonly todoService: TodoService) {}
 
   @Get()
