@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -23,19 +23,30 @@ export class SkillService {
     return await this.skillRepository.save(createSkillDto);
   }
 
-  findAll() {
-    return `This action returns all skill`;
+  async findAll() {
+    return this.skillRepository.find();
   }
 
   async findOne(id: number) {
     return await this.skillRepository.findOne({ where: { id: id } });
   }
 
-  update(id: number, updateSkillDto: UpdateSkillDto) {
-    return `This action updates a #${id} skill`;
+  async update(id: number, updateSkillDto: UpdateSkillDto) {
+    const skill = await this.skillRepository.findOne({ where: { id: id } });
+    if (!skill) {
+      throw new NotFoundException('todo not found');
+    } else {
+      await this.skillRepository.update({ id }, updateSkillDto);
+      return skill;
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} skill`;
+  async remove(id: number) {
+    const skill = await this.skillRepository.findOne({ where: { id: id } });
+    if (!skill) {
+      throw new NotFoundException('todo not here ');
+    }
+    await this.skillRepository.delete(id);
+    return { message: 'deleted todo success' };
   }
 }
