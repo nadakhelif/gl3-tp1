@@ -6,6 +6,9 @@ import { TodoModule } from './todo/todo.module';
 import { CommonModule } from './common/common.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './user/user.module';
+import { CvModule } from './cv/cv.module';
+import { SkillModule } from './skill/skill.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -27,6 +30,9 @@ import appConfig from './config/app.config';
       autoLoadEntities: true,
       synchronize: true,
     }),
+    UserModule,
+    CvModule,
+    SkillModule,
   ],
   controllers: [AppController],
   providers: [AppService],

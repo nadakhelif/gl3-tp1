@@ -31,7 +31,7 @@ export class TodoController {
   updateTodo(@Param('id') id: string, @Body() updateTodo: TodoUpdateDto) {
     return this.todoService.updateTodo(+id, updateTodo);
   }
-  @Get('bd')
+  @Get('bd/page')
   async paginer(@Query() params) {
     console.log(params);
     const { page, limit } = params;
