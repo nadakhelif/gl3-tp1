@@ -3,7 +3,7 @@ import { CreateSkillDto } from './dto/create-skill.dto';
 import { UpdateSkillDto } from './dto/update-skill.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { randEmail, randFullName, randSkill } from '@ngneat/falso';
+import { randSkill } from '@ngneat/falso';
 import { Skill } from './entities/skill.entity';
 
 @Injectable()
@@ -12,15 +12,16 @@ export class SkillService {
     @InjectRepository(Skill)
     private skillRepository: Repository<Skill>,
   ) {}
-  async createMultiple() {
-    for (let i = 0; i < 10; i++) {
-      const skill = new Skill();
-      skill.designation = randSkill();
-      await this.skillRepository.save(skill);
-    }
-  }
+  // async createMultiple() {
+  //   for (let i = 0; i < 10; i++) {
+  //     const skill = new Skill();
+  //     skill.designation = randSkill();
+  //     await this.skillRepository.save(skill);
+  //   }
+  // }
   async create(createSkillDto: CreateSkillDto) {
-    return await this.skillRepository.save(createSkillDto);
+    const skill = this.skillRepository.create(createSkillDto);
+    return await this.skillRepository.save(skill);
   }
 
   async findAll() {

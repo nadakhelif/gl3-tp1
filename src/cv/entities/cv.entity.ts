@@ -19,7 +19,7 @@ export class Cv {
   @Column()
   age: number;
   @Column()
-  cin: string;
+  cin: number;
   @Column()
   job: string;
   @Column()

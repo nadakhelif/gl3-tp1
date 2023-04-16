@@ -13,18 +13,19 @@ export class UserService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
-  async createMultiple() {
-    for (let i = 0; i < 10; i++) {
-      const user = new User();
-      user.email = randEmail();
-      user.username = randFullName();
-      const randomstring = Math.random().toString(36).slice(-8);
-      user.password = randomstring;
-      await this.userRepository.save(user);
-    }
-  }
+  // async createMultiple() {
+  //   for (let i = 0; i < 10; i++) {
+  //     const user = new User();
+  //     user.email = randEmail();
+  //     user.username = randFullName();
+  //     const randomstring = Math.random().toString(36).slice(-8);
+  //     user.password = randomstring;
+  //     await this.userRepository.save(user);
+  //   }
+  // }
   async create(createUserDto: CreateUserDto) {
-    return await this.userRepository.save(createUserDto);
+    const user = this.userRepository.create(createUserDto);
+    return await this.userRepository.save(user);
   }
 
   async findAll() {

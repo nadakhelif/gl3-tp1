@@ -14,10 +14,6 @@ import { UpdateSkillDto } from './dto/update-skill.dto';
 @Controller('skill')
 export class SkillController {
   constructor(private readonly skillService: SkillService) {}
-  @Post('faky')
-  faky() {
-    return this.skillService.createMultiple();
-  }
   @Post()
   create(@Body() createSkillDto: CreateSkillDto) {
     return this.skillService.create(createSkillDto);

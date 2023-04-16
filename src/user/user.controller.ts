@@ -14,10 +14,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  @Post('faky')
-  faky() {
-    return this.userService.createMultiple();
-  }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
