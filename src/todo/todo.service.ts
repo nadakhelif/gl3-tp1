@@ -60,20 +60,23 @@ export class TodoService {
   }
   async getTodos2(conditions?: SearchDTO) {
     const { status, critere } = conditions;
-    if (status || critere) {
+    if (critere) {
       const nameQuery = Like(`%${critere}%`);
       const descriptionQuery = Like(`%${critere}%`);
       const statusQuery = status;
       return await this.todoRepository.find({
         where: [
-          { name: nameQuery, status: statusQuery },
+          { status: statusQuery, name: nameQuery },
           { description: descriptionQuery, status: statusQuery },
-          { status: statusQuery },
         ],
       });
-    } else {
-      return await this.todoRepository.find();
+    } else if (status) {
+      const statusQuery = status;
+      return await this.todoRepository.find({
+        where: [{ status: statusQuery }],
+      });
     }
+    return await this.todoRepository.find();
   }
   //partie lekdima
 

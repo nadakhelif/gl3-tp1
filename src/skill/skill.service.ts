@@ -12,13 +12,6 @@ export class SkillService {
     @InjectRepository(Skill)
     private skillRepository: Repository<Skill>,
   ) {}
-  // async createMultiple() {
-  //   for (let i = 0; i < 10; i++) {
-  //     const skill = new Skill();
-  //     skill.designation = randSkill();
-  //     await this.skillRepository.save(skill);
-  //   }
-  // }
   async create(createSkillDto: CreateSkillDto) {
     const skill = this.skillRepository.create(createSkillDto);
     return await this.skillRepository.save(skill);
@@ -37,8 +30,7 @@ export class SkillService {
     if (!skill) {
       throw new NotFoundException('todo not found');
     } else {
-      await this.skillRepository.update({ id }, updateSkillDto);
-      return skill;
+      return await this.skillRepository.update({ id }, updateSkillDto);
     }
   }
 

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PremierModule } from './premier/premier.module';
@@ -10,6 +10,8 @@ import { UserModule } from './user/user.module';
 import { CvModule } from './cv/cv.module';
 import { SkillModule } from './skill/skill.module';
 import appConfig from './config/app.config';
+import { AuthMiddleware } from './todo/middleware';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -33,8 +35,20 @@ import appConfig from './config/app.config';
     UserModule,
     CvModule,
     SkillModule,
+    JwtModule.register({
+      global: true,
+      secret: 'nada1234',
+      signOptions: { expiresIn: '3600s' },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleware).forRoutes({
+      path: 'todo/bd',
+      method: RequestMethod.POST,
+    });
+  }
+}

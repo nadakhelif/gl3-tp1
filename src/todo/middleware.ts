@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import * as jwt from 'jsonwebtoken';
 import { Request, NextFunction, Response } from 'express';
 
 interface UserRequest extends Request {
@@ -7,9 +7,7 @@ interface UserRequest extends Request {
 }
 
 @Injectable()
-class AuthMiddleware implements NestMiddleware {
-  constructor(private readonly jwtService: JwtService) {}
-
+export class AuthMiddleware implements NestMiddleware {
   async use(req: UserRequest, res: Response, next: NextFunction) {
     const token = req.headers['auth-user'] as string;
     if (!token) {
@@ -17,11 +15,14 @@ class AuthMiddleware implements NestMiddleware {
     }
 
     try {
-      const decodedToken = await this.jwtService.verifyAsync(token);
-      if (!decodedToken.userId) {
+      const decodedToken = jwt.verify(token.toString(), 'nada1234');
+      console.log(decodedToken);
+
+      console.log(decodedToken['userId']);
+      if (!decodedToken['userId']) {
         return res.status(401).json({ message: 'Invalid token' });
       }
-      req.user = decodedToken.userId;
+      req['userId'] = decodedToken['userId'];
       next();
     } catch (err) {
       return res.status(401).json({ message: 'Invalid token' });

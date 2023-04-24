@@ -21,20 +21,6 @@ export class CvService {
     private cvRepository: Repository<Cv>,
     private userService: UserService,
   ) {}
-  // async createMultiple() {
-  //   for (let i = 0; i < 10; i++) {
-  //     const cv = new Cv();
-  //     cv.name = randFirstName();
-  //     cv.firstname = randFirstName();
-  //     cv.cin = randCurrencyCode();
-  //     cv.age = randNumber();
-  //     cv.job = randJobTitle();
-  //     cv.path = randFilePath();
-  //
-  //     cv.user = await this.userService.findOne(Math.random() * (10 - 1) + 1);
-  //     await this.cvRepository.save(cv);
-  //   }
-  // }
 
   async create(createCvDto: CreateCvDto) {
     const cv = this.cvRepository.create(createCvDto);

@@ -44,7 +44,7 @@ export class TodoController {
     return this.todoService.getall();
   }
   @Get('bd/search')
-  async getTodos3(@Query() conditions: SearchDTO) {
+  async search(@Query() conditions: SearchDTO) {
     console.log(conditions);
     return await this.todoService.getTodos2(conditions);
   }
