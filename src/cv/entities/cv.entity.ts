@@ -26,7 +26,7 @@ export class Cv {
   path: string;
   @ManyToOne(() => User, (user: User) => user.cvs)
   user: User;
-  @ManyToMany((type) => Skill, (skill) => skill.cvs)
+  @ManyToMany((type) => Skill, (skill) => skill.cvs,{eager: true})
   @JoinTable({
     name: 'cv_skills',
     joinColumn: {
